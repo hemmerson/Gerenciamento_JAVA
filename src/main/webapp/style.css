@@ -1,0 +1,115 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+    text-align: center;
+    margin: 10px;
+}
+
+.header{
+    background-color: rgb(179, 182, 28);
+    text-align: center;
+    padding: 40px;
+}
+
+.header h1{
+    font-size: 40px;
+}
+
+.content{
+    width: 100%;
+}
+
+.menu{
+    background-color: rgb(17, 124, 124);
+    position: fixed;
+    padding: 20px;
+    width: 30%;
+    height: 100vh;
+}
+
+#receitas{
+    list-style: none;
+    padding: 5px;
+}
+
+#receitas li{
+    padding: 15px;
+    margin: 5px;
+    background-color: rgb(51, 153, 212);
+    border-radius: 5px;
+    transition: 500ms ease-in-out;
+}
+
+#receitas li:hover{
+    padding: 15px;
+    margin: 5px;
+    background-color: rgba(51, 153, 212,.5);
+    border-radius: 5px;
+}
+
+#receitas li a{
+    text-decoration: none;
+    color: white;
+}
+
+#receitas li a:hover{
+    text-decoration: none;
+    color: black;
+}
+
+main{
+    margin-left: 30%;
+    width: 70%;
+    box-sizing: border-box;
+    margin-top: 0;
+}
+
+main h2{
+    font-size: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+main h4{
+    text-align: left;
+    margin-left: 80px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#ingredientes{
+    font-size: 16px;
+    margin: 10px;
+    padding: 5px;
+}
+
+#ingredientes li{
+    padding: 5px;
+    margin: 5px;
+}
+
+#modo_preparo{
+    font-size: 16px;
+    margin: 10px;
+    padding: 5px;
+}
+
+#modo_preparo li{
+    padding: 5px;
+    margin: 5px;
+}
+
+#images img{ 
+    width: 50px;
+    height: 50px;
+    background-color: #ddd;
+    margin: 10px;
+}

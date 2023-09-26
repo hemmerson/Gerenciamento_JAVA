@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receitas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Receitas Boas</h1>
+            <div id="pesquisar">
+                <input type="text" name="pesquisar" id="txt-pesquisar">
+                <input type="button" value="Pesquisar" id="btn-pesquisar">
+            </div>
+        </div>
+        <div class="content">
+            <div class="menu">
+                <nav id="receitas"></nav>
+            </div>
+            <main id="Principal">
+                <h2 id="nome_receita">Nome receita</h2>
+                <hr>
+                <h4>Ingredientes:</h4>
+                <ul id="ingredientes"></ul>
+                <hr>
+                <h4>Modo de Preparo:</h4>
+                <ol id="modo_preparo"></ol>
+                <hr>
+                <h4>Ilustrações:</h4>
+                <div id="images"></div>
+            </main>
+        </div>
+    </div>
+
+    <script src="codigo.js"></script>
+</body>
+
+</html>
