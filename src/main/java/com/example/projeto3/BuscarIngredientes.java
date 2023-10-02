@@ -18,19 +18,20 @@ public class BuscarIngredientes extends HttpServlet {
         response.setContentType("text/xml");
         request.setCharacterEncoding("UTF-8");
 
-        // Hello
         PrintWriter out = response.getWriter();
-        String busca = request.getParameter("ingrediente");
 
+        String busca = request.getParameter("ingrediente");
         String caminho = getServletContext().getRealPath("/WEB-INF/receitasdosite.xml");
 
-        try {
-            FiltraReceitas filtro = new FiltraReceitas(caminho);
-            String texto = filtro.retornaListaPorIngrediente(busca);
-            out.print(texto);
-        } catch (TransformerException | ParserConfigurationException | SAXException e) {
-            throw new RuntimeException(e);
-        }
+        if (busca != null) {
+            try {
+                FiltraReceitas receitas = new FiltraReceitas(caminho);
+                out.print(receitas.pegaPorIngrediente(busca));
+            } catch (Exception e) {
+                out.print("Ingrediente não encontrado");
+            }
+        } else
+            throw new RuntimeException("Você precisa informar o parâmetro ingrediente.");
     }
 
 }

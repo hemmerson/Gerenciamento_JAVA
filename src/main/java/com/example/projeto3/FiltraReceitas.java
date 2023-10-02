@@ -36,85 +36,53 @@ public class FiltraReceitas {
         return fluxo.toString();
     }
 
-    private String pegaPorTag(String tag, String valor) throws TransformerException {
-        Node noReceita = null;
-        NodeList filhos = doc.getElementsByTagName(tag);
-
-        for (int i = filhos.getLength()-1; i >= 0 ; i--){
-            Node noFilho = filhos.item(i);
-            if (noFilho != null) {
-                if (!noFilho.getFirstChild().getNodeValue().equals(valor)) {
-                    noReceita = noFilho.getParentNode();
-                    noReceita.getParentNode().removeChild(noReceita);
-                }
+    public String pegaNome(){
+        Element raiz = doc.getDocumentElement();
+        NodeList nomes = raiz.getElementsByTagName("nome");
+        int tam = nomes.getLength();
+        StringBuilder texto = new StringBuilder();
+        texto.append("<receitas>");
+        for(int i = 0; i < tam; i++){
+            Node noNome = nomes.item(i);
+            if (noNome != null){
+                texto.append("<item>");
+                texto.append(noNome.getFirstChild().getNodeValue());
+                texto.append("</item>");
             }
         }
-        return serealizar(doc);
+        texto.append("</receitas>");
+        return texto.toString();
     }
 
-    public String pegaPorIngrediente(String valor) throws TransformerException {
-        Node noReceita;
-        NodeList ingredientes = doc.getElementsByTagName("ingredientes");
+    public String pegaReceita(String nome) throws TransformerException {
+        Element raiz = doc.getDocumentElement();
+        NodeList nomes = raiz.getElementsByTagName("nome");
+        int tam = nomes.getLength();
+        for (int i = 0; i < tam; i++){
+            Node noNome = nomes.item(i);
+            if (noNome.getFirstChild().getNodeValue().equals(nome)){
+                return serealizar(noNome.getParentNode());
+            }
+        }
+        throw new RuntimeException("Receita não encontrada");
+    }
 
-        for (int i = 0; i < ingredientes.getLength(); i++){
+    public String pegaPorIngrediente(String ingrediente){
+        Element raiz = doc.getDocumentElement();
+        NodeList ingredientes = raiz.getElementsByTagName("ingrediente");
+        int tam = ingredientes.getLength();
+        StringBuilder texto = new StringBuilder();
+        texto.append("<receitas>");
+        for(int i = 0; i < tam; i++){
             Node noIngrediente = ingredientes.item(i);
-            if (noIngrediente != null) {
-                NodeList filhos = noIngrediente.getChildNodes();
-                for (int j = 0; j < filhos.getLength(); j++) {
-                    if (filhos.item(j).getNodeType() == Node.ELEMENT_NODE && filhos.item(j) != null) {
-                        if (!filhos.item(j).getFirstChild().getNodeValue().equals(valor)) {
-                            noReceita = noIngrediente.getParentNode();
-                            noReceita.getParentNode().removeChild(noReceita);
-                            break;
-                        }
-                    }
-                }
+            if (noIngrediente.getFirstChild().getNodeValue().equals(ingrediente)){
+                Element receita = (Element) noIngrediente.getParentNode().getParentNode();
+                texto.append("<item>");
+                texto.append(receita.getElementsByTagName("nome").item(0).getTextContent());
+                texto.append("</item>");
             }
         }
-        return serealizar(doc);
-    }
-
-    public String retornaListaPorIngrediente(String valor) throws TransformerException, ParserConfigurationException {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder;
-        documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document doc2 = documentBuilder.newDocument();
-
-        Element receitas = doc2.createElement("receitas");
-        doc2.appendChild(receitas);
-
-        Node noReceita;
-        NodeList ingredientes = doc.getElementsByTagName("ingredientes");
-
-        for (int i = 0; i < ingredientes.getLength(); i++){
-            Node noIngrediente = ingredientes.item(i);
-            if (noIngrediente != null) {
-                NodeList filhos = noIngrediente.getChildNodes();
-                for (int j = 0; j < filhos.getLength(); j++) {
-                    if (filhos.item(j).getNodeType() == Node.ELEMENT_NODE && filhos.item(j) != null) {
-                        if (filhos.item(j).getFirstChild().getNodeValue().equals(valor)) {
-                            noReceita = noIngrediente.getParentNode();
-                            Node receita = doc2.importNode(noReceita, true);
-                            receitas.appendChild(receita);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        return serealizar(doc2);
-    }
-
-    public String pegaPorNome(String valor) throws TransformerException {
-        NodeList filhos = doc.getElementsByTagName("nome");
-        for(int i = 0; i < filhos.getLength(); i++){
-            Node noFilho = filhos.item(i);
-            if (noFilho != null){
-                if (noFilho.getFirstChild().getNodeValue().equals(valor)){
-                    return serealizar(noFilho.getParentNode());
-                }
-            }
-        }
-        return null;
+        texto.append("</receitas>");
+        return texto.toString();
     }
 }

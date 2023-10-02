@@ -23,19 +23,12 @@ public class NomeReceitas extends HttpServlet {
 
         // Hello
         PrintWriter out = response.getWriter();
-
         String caminho = getServletContext().getRealPath("/WEB-INF/receitasdosite.xml");
 
-        Document doc = FabricaDeDocumento.geraDocumento(caminho);
-        NodeList nomes = doc.getElementsByTagName("nome");
-        String texto="<receitas>";
         try {
-            for (int i = 0; i < nomes.getLength(); i++) {
-                texto += "<nome>"+nomes.item(i).getFirstChild().getNodeValue()+"</nome>";
-            }
-            texto += "</receitas>";
-            out.print(texto);
-        } catch (DOMException e) {
+            FiltraReceitas receitas = new FiltraReceitas(caminho);
+            out.print(receitas.pegaNome());
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

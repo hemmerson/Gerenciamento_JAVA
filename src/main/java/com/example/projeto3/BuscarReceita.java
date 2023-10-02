@@ -18,20 +18,19 @@ public class BuscarReceita extends HttpServlet {
         response.setContentType("text/xml");
         request.setCharacterEncoding("UTF-8");
 
-        // Hello
         PrintWriter out = response.getWriter();
-        String busca = request.getParameter("nome");
 
+        String busca = request.getParameter("nome");
         String caminho = getServletContext().getRealPath("/WEB-INF/receitasdosite.xml");
 
-        Document doc = FabricaDeDocumento.geraDocumento(caminho);
-
-        try {
-            FiltraReceitas filtro = new FiltraReceitas(caminho);
-            String texto = filtro.pegaPorNome(busca);
-            out.print(texto);
-        } catch (TransformerException | ParserConfigurationException | SAXException e) {
-            throw new RuntimeException(e);
-        }
+        if (busca != null) {
+            try {
+                FiltraReceitas receitas = new FiltraReceitas(caminho);
+                out.print(receitas.pegaReceita(busca));
+            } catch (Exception e) {
+                out.print("Receita não encontrada");
+            }
+        } else
+            throw new RuntimeException("Você precisa informar o parâmetro nome.");
     }
 }

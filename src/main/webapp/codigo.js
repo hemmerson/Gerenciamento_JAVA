@@ -12,11 +12,9 @@ function mostraNome(doc){
 }
 
 function listaMenu(doc) {
-    const receitas = doc.getElementsByTagName("nome");
+    const receitas = doc.getElementsByTagName("item");
     let texto = "";
-    let nomeReceita = "";
     for (let receita of receitas) {
-
         texto += `<li><a href="#" onclick=preencheDados('buscareceita?nome=${encodeURI(receita.textContent)}')>${receita.textContent}</a></li>`
     }
     document.getElementById("receitas").innerHTML = texto;
@@ -78,11 +76,10 @@ function mostraModoPreparo(doc){
 
 function buscar(){
     let pesquisa = document.getElementById("txt-pesquisar").value;
-    console.log(`buscaingrediente?ingrediente=${pesquisa}`);
     ajax(`buscaingrediente?ingrediente=${pesquisa}`, function () {
         if (this.readyState == 4 && this.status == 200) {
             const doc = this.responseXML;
-            const nomeReceitas = doc.getElementsByTagName("nome");
+            const nomeReceitas = doc.getElementsByTagName("item");
             let texto = "";
             if (nomeReceitas != null) {
                 for (let nome of nomeReceitas) {
